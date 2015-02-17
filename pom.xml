@@ -318,34 +318,5 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webXml>${project.build.directory}/jspweb.xml</webXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jasig.mojo.jspc</groupId>
-                <artifactId>jspc-maven-plugin</artifactId>
-                <version>2.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-                <!-- Use the Tomcat 7 JSP compiler -->
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jasig.mojo.jspc</groupId>
-                        <artifactId>jspc-compiler-tomcat7</artifactId>
-                        <version>2.0.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
     </build>
 </project>
