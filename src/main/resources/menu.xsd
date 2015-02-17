@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="menus" type="menusType"/>
+    
+    <xs:complexType name="menusType">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="menu" type="menuType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="menuType">
+        <xs:sequence>
+        	<xs:element minOccurs="1" maxOccurs="1" name="name" type="nonZeroLengthString"/>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="menu_item" type="menuItemType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="menuItemType">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="name" type="nonZeroLengthString"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="target" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="url" type="xs:string"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="groups" type="groupsType"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="states" type="statesType"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="children" type="childrenType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="groupsType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="group" type="nonZeroLengthString"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="statesType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="state" type="nonZeroLengthString"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="childrenType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="menu_item" type="menuItemType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- 
+     | Extension to the string simple type that must be non-zero in length
+     +-->
+    <xs:simpleType name="nonZeroLengthString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

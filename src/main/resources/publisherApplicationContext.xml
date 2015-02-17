@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="true">
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="locations">
+            <list>
+                <value>classpath:/dmp.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound"><value>true</value></property>
+    </bean>
+    
+    
+    <!-- Beans for getting menu information -->
+    <!-- Transaction managing proxy -->
+    <bean id="menuDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="target"><ref local="menuDaoTarget"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="store*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="get*">readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--
+     | Do not access this bean directly. Use the 'menuDao' bean above
+     | which wraps this bean to provide transaction management.
+     +-->
+    <bean id="menuDaoTarget" class="edu.wisc.my.portlets.dmp.dao.jdbc.JdbcMenuDao">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+	    <property name="menuIdIncrementer"><ref bean="incrementer"/></property>      
+    </bean>
+    
+    <bean id="incrementer" class="org.springframework.jdbc.support.incrementer.OracleSequenceMaxValueIncrementer">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="incrementerName"><value>MENU_ITEM_SEQ</value></property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
+        <property name="url"><value>${jdbc.url}</value></property>
+        <property name="username"><value>${jdbc.username}</value></property>
+        <property name="password"><value>${jdbc.password}</value></property>
+
+        <property name="initialSize"><value>8</value></property>
+        <property name="maxActive"><value>128</value></property>
+        <property name="maxIdle"><value>16</value></property>
+        <property name="minIdle"><value>8</value></property>
+        <property name="maxWait"><value>15000</value></property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <property name="dataSource"><ref local="dataSource"/></property>
+    </bean>
+</beans>

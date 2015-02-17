@@ -1,0 +1,46 @@
+<ehcache>
+    
+    <!--
+     | Used for storing data for persistent caches
+     +-->
+    <diskStore path="java.io.tmpdir/DynamicMenuPortlet"/>
+    
+    <!--
+     | Required by EHcache
+     +-->
+    <defaultCache
+        maxElementsInMemory="128"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+    />
+    
+    <!--
+     | Cache for portlet output
+     +-->
+    <cache name="portletOutputCache"
+        maxElementsInMemory="128"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LFU"
+    />
+    
+    <!--
+     | Cache for loaded menus output
+     +-->
+    <cache name="menuCache"
+        maxElementsInMemory="128"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LFU"
+    />
+</ehcache>

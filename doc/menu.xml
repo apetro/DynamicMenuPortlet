@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+    <menu>
+        <name>Menu3</name>
+        <menu_item>
+            <name>Menu1</name>
+            <description>menu1 Description</description>
+            <target>_blank</target>
+            <url/>
+            <groups>
+                <group>local.0</group>
+                <group>admin</group>
+                <group>dev</group>
+            </groups>
+            <states>
+                <state>MAXIMIZED</state>
+                <state>NORMAL</state>
+            </states>
+            <children>
+                <menu_item>
+                    <name>Item1</name>
+                    <description>Item2 Description</description>
+                    <target/>
+                    <url>http://www.cnn.com</url>
+                    <groups>
+                        <group>local.0</group>
+                        <group>student</group>
+                        <group>dev</group>
+                    </groups>
+                    <states>
+                        <state>NORMAL</state>
+                        <state>MINIMIZED</state>
+                    </states>
+                    <children/>
+                </menu_item>
+                <menu_item>
+                    <name>Item2</name>
+                    <description>Item3 Description</description>
+                    <target>temp</target>
+                    <url>http://www.yahoo.com</url>
+                    <groups>
+                        <group>local.0</group>
+                        <group>admin</group>
+                        <group>student</group>
+                    </groups>
+                    <states>
+                        <state>MINIMIZED</state>
+                        <state>MAXIMIZED</state>
+                    </states>
+                    <children/>
+                </menu_item>
+                <menu_item>
+                    <name>Item3</name>
+                    <description>Item3 Description</description>
+                    <target>temp</target>
+                    <url>http://www.yahoo.com</url>
+                    <groups>
+                        <group>local.0</group>
+                        <group>admin</group>
+                        <group>student</group>
+                    </groups>
+                    <states>
+                        <state>MINIMIZED</state>
+                        <state>MAXIMIZED</state>
+                    </states>
+                    <children/>
+                </menu_item>
+            </children>
+        </menu_item>
+    </menu>
+</menus>

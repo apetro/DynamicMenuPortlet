@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/dmp.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    
+    <!-- Controllers -->
+    <bean id="viewMenuController" class="edu.wisc.my.portlets.dmp.web.ViewMenuController">
+        <property name="menuDao"><ref bean="menuDao"/></property>
+        <property name="groupsDao"><ref bean="groupsDao"/></property>
+    </bean>
+    
+    
+    <!-- Controller Mappings -->
+    <bean id="portletModeHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
+        <property name="order" value="10"/>
+        <property name="portletModeMap">
+            <map>
+                <entry key="view"><ref local="viewMenuController"/></entry>
+            </map>
+        </property>
+    </bean>
+    
+    
+    <!-- View Resolver -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+    
+    
+    <!-- Views -->    
+    <bean id="viewMenu" class="edu.wisc.my.portlets.dmp.web.MenuXsltView">
+        <property name="contentType" value="text/html" />
+        <property name="xsltResultCache" ref="contentCache"/>
+        <property name="stylesheetLocation" value="/WEB-INF/xsl/dmp.xsl"/>
+        <property name="root" value="menus"/>
+    </bean>    
+    
+    <bean id="noMenu" class="org.springframework.web.servlet.view.JstlView">
+        <property name="url" value="/WEB-INF/jsp/noMenu.jsp"/>
+    </bean>
+    
+    
+    
+    <!-- Output Caching Beans -->
+    <bean id="contentCache" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="ehCacheManager" />
+        <property name="targetMethod" value="getJCache" />
+        <property name="arguments">
+            <list>
+                <value>portletOutputCache</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Menu Caching Beans -->
+    <bean id="menuCache" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="ehCacheManager" />
+        <property name="targetMethod" value="getJCache" />
+        <property name="arguments">
+            <list>
+                <value>menuCache</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- An explicit CacheManager is used so the cache is cleaned up correctly on shutdown -->
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="cacheManagerName" value="DynamicMenuPortlet.cacheManager"></property>
+    </bean>
+    
+    <!-- Bean for getting groups information for a user -->
+    <bean id="groupsDao" class="edu.wisc.my.portlets.dmp.dao.gap.UPortalGroupsDao"/>
+    
+    
+    
+    <!-- Beans for getting menu information -->
+    <!-- Cache filtered menu items -->
+    <bean id="menuDao" class="edu.wisc.my.portlets.dmp.dao.CachingMenuDao">
+        <property name="menuDao" ref="transactionalMenuDao" />
+        <property name="menuCache" ref="menuCache" />
+    </bean>
+    
+    <!-- filter the loaded menus -->
+    <bean id="filteringMenuDao" class="edu.wisc.my.portlets.dmp.dao.filter.FilteringMenuDao">
+        <property name="delegateMenuDao" ref="menuCachingMenuDao" />
+    </bean>
+    
+    <!-- cache whole menu lookups -->
+    <bean id="menuCachingMenuDao" class="edu.wisc.my.portlets.dmp.dao.CachingMenuDao">
+        <property name="menuDao" ref="transactionalMenuDao" />
+        <property name="menuCache" ref="menuCache" />
+    </bean>
+
+    <!-- Transaction managing proxy -->
+    <bean id="transactionalMenuDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="target"><ref local="menuDaoTarget"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="store*">PROPAGATION_REQUIRED</prop>
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="get*">readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--
+     | Do not access this bean directly. Use the 'menuDao' bean above
+     | which wraps this bean to provide transaction management.
+     +-->
+    <bean id="menuDaoTarget" class="edu.wisc.my.portlets.dmp.dao.jdbc.JdbcMenuDao">
+        <property name="dataSource"><ref bean="dataSource"/></property>
+        <property name="menuIdIncrementer"><ref bean="incrementer"/></property>      
+    </bean>    
+
+    <bean id="incrementer" class="org.springframework.jdbc.support.incrementer.OracleSequenceMaxValueIncrementer">
+        <property name="dataSource"><ref bean="dataSource"/></property>
+        <property name="incrementerName"><value>MENU_ITEM_SEQ</value></property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
+        <property name="url"><value>${jdbc.url}</value></property>
+        <property name="username"><value>${jdbc.username}</value></property>
+        <property name="password"><value>${jdbc.password}</value></property>
+
+        <property name="initialSize" value="1" />
+        <property name="maxActive" value="50" />
+        <property name="maxIdle" value="50" />
+        <property name="minIdle" value="1" />
+        <property name="maxWait" value="1000" />
+
+        <property name="validationQuery" value="SELECT 1 FROM DUAL" />
+        <property name="testWhileIdle" value="true" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="numTestsPerEvictionRun" value="10" />
+        <property name="minEvictableIdleTimeMillis" value="150000" />
+        <property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=2000;oracle.net.READ_TIMEOUT=30000" />
+    </bean>
+
+     
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <property name="dataSource"><ref local="dataSource"/></property>
+    </bean>
+    
+    
+    
+   <!-- JMX Management Bean Exposure -->
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+        <property name="locateExistingServerIfPossible" value="true" />
+    </bean>
+    
+    <!-- EhCache management and statistics -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="net.sf.ehcache.management.ManagementService" />
+        <property name="targetMethod" value="registerMBeans" />
+        <property name="arguments">
+            <list>
+                <ref bean="ehCacheManager" />
+                <ref bean="mbeanServer" />
+                <value>true</value>
+                <value>true</value>
+                <value>true</value>
+                <value>true</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Exporter used to register beans with the mbean server -->
+    <bean id="jmxAdapter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="server" ref="mbeanServer" />
+        <property name="ensureUniqueRuntimeObjectNames" value="true" />
+        <property name="assembler" ref="mbeanInfoAssembler" />
+        <property name="beans">
+            <map>
+                <entry key="DynamicMenuPortlet:section=Persistence,name=dataSource"><ref local="dataSource"/></entry>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="mbeanInfoAssembler" class="org.springframework.jmx.export.assembler.MethodExclusionMBeanInfoAssembler">
+        <property name="ignoredMethodMappings">
+            <props>
+                <prop key="DynamicMenuPortlet:section=Persistence,name=dataSource">getConnection,getLogWriter,setLogWriter</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
