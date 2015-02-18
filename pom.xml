@@ -27,6 +27,19 @@
       <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>code.doit-uw-releases</id>
+            <name>code.doit-uw-releases</name>
+            <url>https://code.doit.wisc.edu/maven/content/repositories/uw-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>code.doit-uw-snapshots</id>
+            <name>code.doit-uw-snapshots</name>
+            <url>https://code.doit.wisc.edu/maven/content/repositories/uw-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 
     <repositories>
         <repository>
