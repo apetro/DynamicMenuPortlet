@@ -20,6 +20,14 @@
         <maven>3.0.0</maven>
     </prerequisites>
 
+    <scm>
+        <connection>scm:git:git@github.com:UW-Madison-DoIT/DynamicMenuPortlet.git</connection>
+        <developerConnection>scm:git:git@github.com:UW-Madison-DoIT/DynamicMenuPortlet.git</developerConnection>
+        <url>https://github.com/UW-Madison-DoIT/DynamicMenuPortlet</url>
+      <tag>HEAD</tag>
+    </scm>
+
+
     <repositories>
         <repository>
             <id>code.doit-public-releases</id>
