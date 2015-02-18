@@ -11,7 +11,7 @@
     <groupId>edu.wisc.portlet</groupId>
     <artifactId>DynamicMenuPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Dynamic Menu Portlet</name>
     <description>Portlet that generates a UI based on the groups the user is in.</description>
 
@@ -23,7 +23,7 @@
         <connection>scm:git:git@github.com:UW-Madison-DoIT/DynamicMenuPortlet.git</connection>
         <developerConnection>scm:git:git@github.com:UW-Madison-DoIT/DynamicMenuPortlet.git</developerConnection>
         <url>https://github.com/UW-Madison-DoIT/DynamicMenuPortlet</url>
-      <tag>DynamicMenuPortlet-1.0.0</tag>
+      <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
