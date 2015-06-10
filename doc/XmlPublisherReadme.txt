@@ -8,7 +8,7 @@ ant publishXml -DmenuXmlFile=/my/uportal-dev/portlets/DynamicMenuPortlet/doc
 
 There is a sample menu.xml file included in the docs directory.
 
-The XML is validated agaist the menu.xsd schema in the source directory
+The XML is validated against the menu.xsd schema in the source directory
 to ensure its structure is correct.
 
 
