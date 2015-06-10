@@ -1,4 +1,4 @@
-An XML based menu publishing tool is included for convience. The tool
+An XML based menu publishing tool is included for convenience. The tool
 can be using the 'publishXml' ant target. The XML document to be
 published must be specified.
 
