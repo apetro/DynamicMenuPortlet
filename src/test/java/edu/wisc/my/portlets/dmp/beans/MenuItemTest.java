@@ -65,6 +65,59 @@ public class MenuItemTest extends TestCase {
             //This is what we want!
         }
     }
+
+    /**
+     * Test that hasMatchingGroup() correctly returns true when presented groups have a match.
+     */
+    public void testHasMatchingGroup() {
+
+        final MenuItem menuItem = new MenuItem();
+        menuItem.setGroups( new String[] {"privilegedFew", "huddledMasses"});
+
+        final String[] userGroups = new String[] { "privilegedFew", "someIrrelevantGroup"};
+
+        assertTrue(menuItem.hasMatchingGroup(userGroups));
+
+    }
+
+    /**
+     * Test that hasMatchingGroup() correctly returns false when presented groups do not match.
+     */
+    public void testDoesNotHaveMatchingGroup() {
+
+        final MenuItem menuItem = new MenuItem();
+        menuItem.setGroups( new String[] {"privilegedFew", "huddledMasses"});
+
+        final String[] userGroups = new String[] { "unprivileged"};
+
+        assertFalse(menuItem.hasMatchingGroup(userGroups));
+
+    }
+
+    /**
+     * Test that returns false when the menu item is not granted to any groups.
+     */
+    public void testDoesNotHaveMatchingGroupWhenItemGroupsAreNull() {
+
+        final MenuItem menuItem = new MenuItem();
+
+        final String[] userGroups = new String[] { "privilegedFew"};
+
+        assertFalse(menuItem.hasMatchingGroup(userGroups));
+
+    }
+
+    /**
+     * Test that returns false when the user has null groups.
+     */
+    public void testDoesNotHaveMatchingGroupWhenUserGroupsAreNull() {
+
+        final MenuItem menuItem = new MenuItem();
+        menuItem.setGroups( new String[] {"privilegedFew", "huddledMasses"});
+
+        assertFalse(menuItem.hasMatchingGroup(null));
+
+    }
     
     
 }

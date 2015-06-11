@@ -12,7 +12,7 @@
     <artifactId>DynamicMenuPortlet</artifactId>
     <packaging>war</packaging>
     <!-- Use Semantic Versioning.  See CONTRIBUTING.md . -->
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>Dynamic Menu Portlet</name>
     <description>Portlet that generates a UI based on the groups the user is in.</description>
 
