@@ -15,7 +15,6 @@ import junit.framework.TestCase;
 /**
  * Testcase for HsqlDatasource
  * @author andrew.petro@yale.edu
- * @version $Revision: 1.1 $ $Date: 2008/09/29 00:53:51 $
  */
 public class TransientDatasourceTest extends TestCase {
 

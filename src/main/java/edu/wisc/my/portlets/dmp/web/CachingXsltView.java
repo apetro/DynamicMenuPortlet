@@ -25,7 +25,6 @@ import org.springframework.web.servlet.view.xslt.AbstractXsltView;
  * property.
  * 
  * @author Eric Dalquist
- * @version $Revision: 1.1 $
  */
 public class CachingXsltView extends AbstractXsltView {
     private Map<Serializable, String> xsltResultCache;

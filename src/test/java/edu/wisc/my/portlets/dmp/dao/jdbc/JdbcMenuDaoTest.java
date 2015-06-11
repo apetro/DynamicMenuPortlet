@@ -55,7 +55,6 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
 
 /**
  * @author sschwartz
- * @version $Id: JdbcMenuDaoTest.java,v 1.1 2008/09/29 00:53:51 dalquist Exp $
  */
 public class JdbcMenuDaoTest extends TestCase {
     private DataSource testDataSource;

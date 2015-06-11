@@ -47,7 +47,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * Represents an item displayed on the menu portlet.
  * 
  * @author sschwartz
- * @version $Id: MenuItem.java,v 1.1 2008/09/29 00:53:51 dalquist Exp $
  */
 public class MenuItem {
     private String name = null;

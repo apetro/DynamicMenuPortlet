@@ -65,7 +65,6 @@ import edu.wisc.my.portlets.dmp.dao.MenuDao;
  * the database.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Id: XmlMenuPublisher.java,v 1.2 2010/01/27 19:11:45 dalquist Exp $
  */
 public class XmlMenuPublisher {
     private static final Log LOG = LogFactory.getLog(XmlMenuPublisher.class);

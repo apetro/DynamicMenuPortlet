@@ -41,7 +41,6 @@ package edu.wisc.my.portlets.dmp.tools;
  * location in the XML document. 
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Revision: 1.1 $
  */
 public class XmlLocationStack {
     private final StringBuffer location = new StringBuffer();

@@ -18,7 +18,6 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
 
 /**
  * @author Eric Dalquist
- * @version $Revision: 1.2 $
  */
 public class FilteringMenuItem extends MenuItem {
     private final MenuItem filteredMenuItem;

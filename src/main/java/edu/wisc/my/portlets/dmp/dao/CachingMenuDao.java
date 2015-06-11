@@ -13,7 +13,6 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
 
 /**
  * @author Eric Dalquist
- * @version $Revision: 1.1 $
  */
 public class CachingMenuDao implements MenuDao {
     private MenuDao menuDao;
