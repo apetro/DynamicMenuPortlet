@@ -35,6 +35,7 @@
 *******************************************************************************/
 package edu.wisc.my.portlets.dmp.beans;
 
+import edu.wisc.my.portlets.dmp.dao.filter.FilteringMenuItem;
 import junit.framework.TestCase;
 
 /**
@@ -116,6 +117,22 @@ public class MenuItemTest extends TestCase {
         menuItem.setGroups( new String[] {"privilegedFew", "huddledMasses"});
 
         assertFalse(menuItem.hasMatchingGroup(null));
+
+    }
+
+    /**
+     * Test that a semantically equal subclass is evaluated as equal.
+     */
+    public void testEqualHandlingSubclasses() {
+
+        MenuItem menuItem = new MenuItem();
+
+        FilteringMenuItem filteringMenuItem = new FilteringMenuItem(menuItem);
+
+        menuItem.setName("A menu item");
+
+        assertEquals(menuItem , filteringMenuItem);
+        assertEquals(filteringMenuItem, menuItem);
 
     }
     

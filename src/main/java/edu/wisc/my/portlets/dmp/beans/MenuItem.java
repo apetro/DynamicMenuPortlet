@@ -273,12 +273,12 @@ public class MenuItem {
         
         final MenuItem rhs = (MenuItem)object;
         return new EqualsBuilder()
-            .append(this.groups, rhs.groups)
-            .append(this.target, rhs.target)
-            .append(this.description, rhs.description)
-            .append(this.displayStates, rhs.displayStates)
-            .append(this.url, rhs.url)
-            .append(this.name, rhs.name)
+            .append(this.groups, rhs.getGroups())
+            .append(this.target, rhs.getTarget())
+            .append(this.description, rhs.getDescription())
+            .append(this.displayStates, rhs.getDisplayStates())
+            .append(this.url, rhs.getUrl())
+            .append(this.name, rhs.getName())
             .isEquals();
     }
 
