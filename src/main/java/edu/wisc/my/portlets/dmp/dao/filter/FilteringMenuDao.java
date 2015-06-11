@@ -36,6 +36,10 @@ public class FilteringMenuDao implements MenuDao {
     public MenuItem getMenu(String menuName, String[] userGroups) {
         final MenuItem menuItem = this.delegateMenuDao.getMenu(menuName);
 
+        if (null == menuItem) {
+            return null;
+        }
+
         // the userGroups must include at least one group to which the root menu item is granted
         // or else getMenu() should return null as specified in the API.
 

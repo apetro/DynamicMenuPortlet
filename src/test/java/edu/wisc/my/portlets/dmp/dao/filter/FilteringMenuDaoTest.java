@@ -75,4 +75,20 @@ public class FilteringMenuDaoTest extends TestCase {
 
     }
 
+    /**
+     * Test that the filtering DAO passes through a null (representing menu not found).
+     */
+    public void testNotFoundMenuReturnsNull() {
+
+        final InMemoryMenuDao underlyingDao = new InMemoryMenuDao();
+
+        final FilteringMenuDao filteringWrapper = new FilteringMenuDao();
+        filteringWrapper.setDelegateMenuDao(underlyingDao);
+
+        assertNull( filteringWrapper.getMenu("does_not_exist") );
+        assertNull( filteringWrapper.getMenu("still_does_not_exist",
+            new String[] { "no", "matter", "what", "groups", "I", "have" }) );
+
+    }
+
 }
