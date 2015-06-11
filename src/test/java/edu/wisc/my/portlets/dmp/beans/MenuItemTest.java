@@ -39,6 +39,7 @@ import junit.framework.TestCase;
 
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class MenuItemTest extends TestCase {
     

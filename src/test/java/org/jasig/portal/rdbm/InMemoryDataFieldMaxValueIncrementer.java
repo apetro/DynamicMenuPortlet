@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueInc
 
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class InMemoryDataFieldMaxValueIncrementer extends AbstractDataFieldMaxValueIncrementer {
     private long key;

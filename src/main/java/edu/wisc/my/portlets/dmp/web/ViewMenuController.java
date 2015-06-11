@@ -29,6 +29,7 @@ import edu.wisc.my.portlets.dmp.dao.MenuDao;
  * user is a member of.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class ViewMenuController extends AbstractController {
     /**

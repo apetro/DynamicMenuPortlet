@@ -55,6 +55,7 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
  * Monitors SAX events and generates DMP menus.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class MenuItemGeneratingHandler implements ContentHandler {
     //Locations

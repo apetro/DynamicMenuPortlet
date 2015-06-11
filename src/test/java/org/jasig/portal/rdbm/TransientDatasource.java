@@ -19,6 +19,7 @@ import org.apache.commons.dbcp.BasicDataSource;
  * A DataSource implementation backed by an in-memory HSQLDb instance,
  * suitable for implementing testcases for DataSource-consuming DAO impls.
  * @author andrew.petro@yale.edu
+ * @since 1.0
  */
 public class TransientDatasource implements DataSource {
     

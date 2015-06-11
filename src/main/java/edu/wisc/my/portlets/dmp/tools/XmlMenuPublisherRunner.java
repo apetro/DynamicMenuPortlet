@@ -53,6 +53,7 @@ import org.apache.commons.cli.PosixParser;
  * class to publish menus to the database.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class XmlMenuPublisherRunner {
     private static final String XML_FILE_OPT = "f";

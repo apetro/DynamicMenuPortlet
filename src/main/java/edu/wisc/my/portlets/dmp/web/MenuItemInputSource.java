@@ -50,6 +50,7 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
  * MenuItem structure to the MenuItemXmlReader
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class MenuItemInputSource extends InputSource {
     private final Map<String, MenuItem> menus;

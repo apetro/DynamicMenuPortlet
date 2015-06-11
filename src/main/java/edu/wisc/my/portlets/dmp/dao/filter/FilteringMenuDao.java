@@ -10,6 +10,7 @@ import edu.wisc.my.portlets.dmp.dao.MenuDao;
 
 /**
  * @author Eric Dalquist
+ * @since 1.0
  */
 public class FilteringMenuDao implements MenuDao {
     private MenuDao delegateMenuDao;

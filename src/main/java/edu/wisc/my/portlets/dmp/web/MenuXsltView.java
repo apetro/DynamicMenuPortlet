@@ -20,6 +20,7 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
  * Creates a {@link Source} from a root MenuItem and menu name provided in the model.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class MenuXsltView extends CachingXsltView {
     

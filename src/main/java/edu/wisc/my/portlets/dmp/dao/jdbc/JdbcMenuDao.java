@@ -61,6 +61,7 @@ import edu.wisc.my.portlets.dmp.dao.MenuDao;
 
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
+ * @since 1.0
  */
 public class JdbcMenuDao extends JdbcDaoSupport implements MenuDao {
     private DataFieldMaxValueIncrementer menuIdIncrementer;
