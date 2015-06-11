@@ -36,40 +36,14 @@ public class FilteringMenuDao implements MenuDao {
     public MenuItem getMenu(String menuName, String[] userGroups) {
         final MenuItem menuItem = this.delegateMenuDao.getMenu(menuName);
 
-        // this group checking logic cries out for refactoring
-
         // the userGroups must include at least one group to which the root menu item is granted
         // or else getMenu() should return null as specified in the API.
 
-        if (null == userGroups) {
-            return null;
+        if (menuItem.hasMatchingGroup(userGroups)) {
+            // user is authorized to see the root menu,
+            // so return the not-null filtering-wrapped menu item.
+            return new FilteringMenuItem(menuItem, userGroups);
         }
-
-        final String[] groupsAuthorizedToSeeRootMenuItem = menuItem.getGroups();
-
-        if (null == groupsAuthorizedToSeeRootMenuItem) {
-            return null;
-        }
-
-
-        for (final String authorizedGroup : groupsAuthorizedToSeeRootMenuItem) {
-
-            if (null != authorizedGroup) {
-                for (final String grantedGroup : userGroups) {
-
-                    if ( null != grantedGroup && authorizedGroup.equals(grantedGroup)) {
-
-                        // found a match! user is authorized to see the root menu,
-                        // so return the not-null filtering-wrapped menu item.
-                        return new FilteringMenuItem(menuItem, userGroups);
-
-                    }
-
-                }
-            }
-
-        }
-
 
         // user groups not among those authorized to see root menu item, so return null as per
         // interface definition of this getMenu() method.
