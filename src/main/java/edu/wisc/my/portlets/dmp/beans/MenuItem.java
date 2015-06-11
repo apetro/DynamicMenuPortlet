@@ -58,7 +58,44 @@ public class MenuItem {
     private String target = null;
     private WindowState[] displayStates = new WindowState[0];
     
-    
+    /**
+     * Returns true if userGroups is not null and contains at least one group name that matches a
+     * group to which this MenuItem is granted.  Returns false otherwise.
+     * @param userGroups potentially null groups held by a user
+     * @return true if the user has a matching group authorizing access to this menu item, false
+     * otherwise
+     *
+     * @since 1.1
+     */
+    public boolean hasMatchingGroup(final String[] userGroups) {
+
+        if (null == userGroups) {
+            return false;
+        }
+
+        if (null == this.groups) {
+            return false;
+        }
+
+        for (final String authorizedGroup : groups /* groups authorized to see menu item */) {
+
+            if (null != authorizedGroup) {
+
+                for (final String grantedGroup /* group the user has */ : userGroups) {
+
+                    if (null != grantedGroup && authorizedGroup.equals(grantedGroup)) {
+
+                        // found a match! user is authorized to see the root menu
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // did not find a match; user is not authorized to see menu item.
+        return false;
+    }
+
     
     /**
      * An ordered list of children this portlet has. May not be null. May be
