@@ -45,7 +45,7 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
  * retrieving menus.
  * 
  * @author sschwartz
- * @version $Id: MenuDao.java,v 1.1 2008/09/29 00:53:51 dalquist Exp $
+ * @since 1.0
  */
 public interface MenuDao {
 

@@ -61,7 +61,7 @@ import edu.wisc.my.portlets.dmp.beans.MenuItem;
  * well formed XML representing the structure using SAX events.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Id: MenuItemXmlReader.java,v 1.1 2008/09/29 00:53:51 dalquist Exp $
+ * @since 1.0
  */
 public class MenuItemXmlReader implements XMLReader, Locator {
     private static final String ELEMENT_MENUS = "menus";

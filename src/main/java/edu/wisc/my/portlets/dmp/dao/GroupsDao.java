@@ -9,7 +9,7 @@ package edu.wisc.my.portlets.dmp.dao;
  * Provides a method for getting group memebership information for a user.
  * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Revision: 1.1 $
+ * @since 1.0
  */
 public interface GroupsDao {
     /**
