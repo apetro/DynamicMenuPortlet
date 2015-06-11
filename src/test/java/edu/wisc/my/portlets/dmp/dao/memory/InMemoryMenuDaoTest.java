@@ -126,8 +126,6 @@ public class InMemoryMenuDaoTest extends TestCase {
      * that the in memory DAO is doing something about filtering; the actual filtering behavior is
      * implemented via FilteringMenuItem, which should have its own comprehensive unit tests.
      */
-
-    /*
     @Test
     public void testReturnsFilteredMenuWhenGroupMatches() {
 
@@ -151,7 +149,6 @@ public class InMemoryMenuDaoTest extends TestCase {
         assertEquals(thingOne, inMemoryMenuDao.getMenu("thingOne", matchingGroups));
 
     }
-    */
 
     /**
      * When the user has no group granting access to the requested menu item,
@@ -162,8 +159,6 @@ public class InMemoryMenuDaoTest extends TestCase {
      * implemented via FilteringMenuItem, which should have its own comprehensive unit tests for
      * deep filtering behavior within the tree.
      */
-
-    /*
     @Test
     public void testFiltersAwayMenuWhenGroupDoesNotMatch() {
 
@@ -187,6 +182,5 @@ public class InMemoryMenuDaoTest extends TestCase {
         assertNull(inMemoryMenuDao.getMenu("thingOne", matchingGroups));
 
     }
-    */
 
 }

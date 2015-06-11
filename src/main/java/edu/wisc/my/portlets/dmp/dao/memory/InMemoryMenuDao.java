@@ -21,7 +21,7 @@ package edu.wisc.my.portlets.dmp.dao.memory;
 
 import edu.wisc.my.portlets.dmp.beans.MenuItem;
 import edu.wisc.my.portlets.dmp.dao.MenuDao;
-//import edu.wisc.my.portlets.dmp.dao.filter.FilteringMenuItem;
+import edu.wisc.my.portlets.dmp.dao.filter.FilteringMenuDao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +36,12 @@ public final class InMemoryMenuDao
 
     private Map<String, MenuItem> menus = new HashMap<String, MenuItem>();
 
+    private FilteringMenuDao filteringMenuDao = new FilteringMenuDao();
+
+    public InMemoryMenuDao() {
+        this.filteringMenuDao.setDelegateMenuDao(this);
+    }
+
     @Override
     public String[] getPublishedMenuNames() {
         return this.menus.keySet().toArray(new String[0]);
@@ -48,9 +54,9 @@ public final class InMemoryMenuDao
 
     @Override
     public MenuItem getMenu(final String menuName, final String[] userGroups) {
-        throw new UnsupportedOperationException(
-            "Getting menu filtered by groups not yet supported");
-        //return new FilteringMenuItem(this.menus.get(menuName), userGroups);
+
+        return this.filteringMenuDao.getMenu(menuName, userGroups);
+
     }
 
     @Override
