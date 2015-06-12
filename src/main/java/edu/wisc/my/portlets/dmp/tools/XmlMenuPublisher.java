@@ -71,6 +71,8 @@ public class XmlMenuPublisher {
     private static final Log LOG = LogFactory.getLog(XmlMenuPublisher.class);
     
     private BeanFactory factory;
+
+    private XmlMenuParser xmlParser = new XmlMenuParser();
     
     /**
      * Get the bean factory for the publisher.
@@ -97,53 +99,26 @@ public class XmlMenuPublisher {
         LOG.info("Publishing menus from: " + xmlSourceUrl);
 
         try {
-            //The XMLReader will read in the XML document
-            final XMLReader reader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
-            
-            try {
-                reader.setFeature("http://apache.org/xml/features/validation/dynamic", true);     
-                reader.setFeature("http://apache.org/xml/features/validation/schema", true);
-                
-                final URL menuSchema = this.getClass().getResource("/menu.xsd");
-                if (menuSchema == null) {
-                    throw new MissingResourceException("Could not load menu schema. '/menu.xsd'", this.getClass().getName(), "/menu.xsd");
-                }
-                
-                reader.setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", menuSchema.toString());
-            }
-            catch (SAXNotRecognizedException snre) {
-                LOG.warn("Could not enable XSD validation", snre);
-            }
-            catch (SAXNotSupportedException xnse) {
-                LOG.warn("Could not enable XSD validation", xnse);
-            }
-            
-            final MenuItemGeneratingHandler handler = new MenuItemGeneratingHandler();
-            
-            reader.setContentHandler(handler);
-            reader.parse(new InputSource(xmlSourceUrl.openStream()));
-            
-            final Map menus = handler.getMenus();
-            
+
+            final InputSource urlSource = new InputSource(xmlSourceUrl.openStream());
+
+            final Map menus = this.xmlParser.parse(urlSource);
+
             final BeanFactory factory = this.getFactory();
-            final MenuDao dao = (MenuDao)factory.getBean("menuDao", MenuDao.class);
-            
-            for (final Iterator nameItr = menus.entrySet().iterator(); nameItr.hasNext();) {
-                final Map.Entry entry = (Map.Entry)nameItr.next();
-                final String menuName = (String)entry.getKey();
-                final MenuItem rootItem = (MenuItem)entry.getValue();
-                
+            final MenuDao dao = (MenuDao) factory.getBean("menuDao", MenuDao.class);
+
+            for (final Iterator nameItr = menus.entrySet().iterator(); nameItr.hasNext(); ) {
+                final Map.Entry entry = (Map.Entry) nameItr.next();
+                final String menuName = (String) entry.getKey();
+                final MenuItem rootItem = (MenuItem) entry.getValue();
+
                 LOG.info("Publishing menu='" + menuName + "' item='" + rootItem + "'");
                 dao.storeMenu(menuName, rootItem);
             }
-            
+
             LOG.info("Published menus from: " + xmlSourceUrl);
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             LOG.error("Error publishing menus", ioe);
-        }
-        catch (SAXException saxe) {
-            LOG.error("Error publishing menus", saxe);
         }
     }
 }
