@@ -137,7 +137,11 @@ public class ViewMenuController extends AbstractController {
         cacheKey.add(new HashSet<String>(groupList));        
         return cacheKey;
     }
-    
+
+    /**
+     * @deprecated as of 1.1 , use MenuItem allGroupsReferencedInMenuTree() instead.
+     */
+    @Deprecated
     protected Set<String> getAllMenuGroups(MenuItem menuRoot) {
         if (menuRoot == null) {
             return null;
