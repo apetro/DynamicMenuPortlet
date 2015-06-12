@@ -117,7 +117,7 @@ public class ViewMenuController extends AbstractController {
         
         if (menuRoot != null) {
             //All the groups the menu supports
-            final Set<String> menuGroups = this.getAllMenuGroups(menuRoot);
+            final Set<String> menuGroups = menuRoot.allGroupsReferencedInMenuTree();
             //Reduce menu groups to just those that overlap with the user's group list
             menuGroups.retainAll(Arrays.asList(userGroups));
             
