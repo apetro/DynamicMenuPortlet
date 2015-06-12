@@ -143,22 +143,6 @@ public class ViewMenuController extends AbstractController {
             return null;
         }
         
-        final Set<String> allGroups = new HashSet<String>();
-        final String[] groups = menuRoot.getGroups();
-        if (groups != null) {
-            for (final String group : groups) {
-                allGroups.add(group);
-            }
-        }
-        
-        final MenuItem[] children = menuRoot.getChildren();
-        if (children != null) {
-            for (final MenuItem childItem : children) {
-                final Set<String> childGroups = this.getAllMenuGroups(childItem);
-                allGroups.addAll(childGroups);
-            }
-        }
-        
-        return allGroups;
+        return menuRoot.allGroupsReferencedInMenuTree();
     }
 }
