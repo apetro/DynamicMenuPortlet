@@ -43,6 +43,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents an item displayed on the menu portlet.
  * 
@@ -94,6 +97,39 @@ public class MenuItem {
 
         // did not find a match; user is not authorized to see menu item.
         return false;
+    }
+
+    /**
+     * Convenience method reading the set of all groups referenced in the tree.
+     *
+     * This turns out to be useful in figuring out what user groups are going to matter in filtering
+     * the tree, which is in turn useful in cache optimization.
+     *
+     * @return non-null potentially empty Set of Strings representing mentioned groups.
+     *
+     * @since 1.1
+     */
+    public Set<String> allGroupsReferencedInMenuTree() {
+
+        final Set<String> allGroups = new HashSet<String>();
+
+        // capture the groups referenced by this very menu item
+        if (this.groups != null) {
+            for (final String group : groups) {
+                allGroups.add(group);
+            }
+        }
+
+        // recurse, considering each of the children of this menu item.
+        final MenuItem[] children = getChildren();
+        if (null != children) {
+            for (final MenuItem childItem : children) {
+                final Set<String> childGroups = childItem.allGroupsReferencedInMenuTree();
+                allGroups.addAll(childGroups);
+            }
+        }
+
+        return allGroups;
     }
 
     

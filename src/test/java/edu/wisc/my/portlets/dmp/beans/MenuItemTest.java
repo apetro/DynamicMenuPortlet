@@ -38,6 +38,9 @@ package edu.wisc.my.portlets.dmp.beans;
 import edu.wisc.my.portlets.dmp.dao.filter.FilteringMenuItem;
 import junit.framework.TestCase;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @since 1.0
@@ -133,6 +136,41 @@ public class MenuItemTest extends TestCase {
 
         assertEquals(menuItem , filteringMenuItem);
         assertEquals(filteringMenuItem, menuItem);
+
+    }
+
+    /**
+     * Test that a menu item accurately reports the set of all groups referenced by itself and its
+     * extended children.
+     */
+    public void testAllGroupsReferencedInMenuTree() {
+
+        final MenuItem rootItem = new MenuItem();
+        rootItem.setGroups( new String[] { "groupOne", "groupTwo"} );
+
+        final MenuItem childOne = new MenuItem();
+        childOne.setGroups( new String[] { "anotherGroup" } );
+
+        final MenuItem childTwo = new MenuItem();
+        childTwo.setGroups( new String[] { "yetAnotherGroup"});
+
+        final MenuItem grandChild = new MenuItem();
+        grandChild.setGroups(new String[] {"groupTwo", "groupThree"});
+
+        childTwo.setChildren(new MenuItem[] {grandChild});
+
+        rootItem.setChildren( new MenuItem[] { childOne, childTwo});
+
+
+        Set<String> actual = rootItem.allGroupsReferencedInMenuTree();
+        Set<String> expected = new HashSet<String>();
+        expected.add("groupOne");
+        expected.add("groupTwo");
+        expected.add("anotherGroup");
+        expected.add("yetAnotherGroup");
+        expected.add("groupThree");
+
+        assertEquals(actual, expected);
 
     }
     
